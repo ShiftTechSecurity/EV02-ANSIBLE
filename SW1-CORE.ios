@@ -1,0 +1,76 @@
+!! Passage en mode configuration
+enable
+configure terminal
+
+!! Configuration de l'identifiant de connexion
+username cisco password cisco
+enable secret cisco
+
+!! Configuration du SSH
+hostname SW1-CORE
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+ip ssh version 2
+line vty 0 4
+transport input ssh
+login local
+
+!! Activation du routage IP
+ip routing
+
+!! Déclaration des VLAN
+vlan 10
+name Administratif
+vlan 20 
+name Direction
+vlan 30
+name Serveur
+vlan 51
+name MGMT
+
+!! Configuration de l'interface fa 0/24
+interface fa 1/0/24
+no switchport
+ip address 192.168.254.1 255.255.255.0
+
+!! Configuration des interfaces virtuelles
+interface vlan 10
+ip address 192.168.10.254 255.255.255.0
+ip helper-address 192.168.30.2
+no shutdown
+interface vlan 20
+ip address 192.168.20.254 255.255.255.0
+ip helper-address 192.168.30.2
+no shutdown
+interface vlan 30
+ip address 192.168.30.254 255.255.255.0
+no shutdown
+interface vlan 51
+ip address 192.168.51.254 255.255.255.0
+no shutdown
+
+!! Configuration des VLAN sur les ports
+interface range fa 1/0/1-12
+switchport mode access
+switchport access vlan 10
+interface range fa 1/0/13-16
+switchport mode access
+switchport access vlan 20
+interface range fa 1/0/17-20
+switchport mode access
+switchport access vlan 30
+interface range fa 1/0/21-23
+switchport mode access
+switchport access vlan 51
+
+!! Configuration de la route par defaut
+ip route 0.0.0.0 0.0.0.0 192.168.254.254
+
+!! Redémarrage des ports
+interface range fa 1/0/1-24
+shutdown
+no shutdown
+
+!! Sauvegarde de la configuration
+do copy running-config startup-config

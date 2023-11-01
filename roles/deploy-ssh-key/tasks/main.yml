@@ -1,0 +1,12 @@
+---
+# tasks file for /etc/ansible/roles/deploy-ssh-key
+- name: Create the user "ansible" on the cisco routers and deploy SSH key
+  cisco.ios.ios_user:
+    name: ansible
+    configured_password: ansible
+    sshkey: "{{ lookup('file', '/home/ansible/.ssh/cisco.pub') }}"
+    state: present
+
+- name: Sauvegarde du "running-config" vers le "startup-config"
+  cisco.ios.ios_config:
+    save_when: modified

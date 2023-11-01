@@ -1,0 +1,16 @@
+ansible_connection: ansible.netcommon.network_cli
+ansible_network_os: cisco.ios.ios
+ansible_user: cisco
+ansible_password: cisco
+ansible_become: yes
+ansible_become_method: enable
+ansible_become_password: cisco
+
+ftp_username: "ansible"
+ftp_password: "ansible"
+ftp_server_name: "SRV-FTP"
+ftp_ip_address: "192.168.30.3"
+ansible_command_timeout: "180"
+snmp_user: "ansible"
+snmp_password: "ansible"
+snmp_priv_password: "ansible"

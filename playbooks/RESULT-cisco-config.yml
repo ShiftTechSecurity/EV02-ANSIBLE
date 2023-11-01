@@ -1,0 +1,65 @@
+ansible@SRV-ANSIBLE:/etc/ansible/playbooks$ ansible-playbook cisco-config.yml
+
+PLAY [backup-pre-config] *************************************************************************************************************************************************************************************
+
+TASK [read-config : Récupération des variables "ansible_date_time" de ansible] *******************************************************************************************************************************
+[WARNING]: ansible-pylibssh not installed, falling back to paramiko
+ok: [RT1-CORE]
+ok: [SW1-CORE]
+
+TASK [read-config : Lecture du "running-config"] *************************************************************************************************************************************************************
+ok: [RT1-CORE]
+ok: [SW1-CORE]
+
+TASK [read-config : Sauvegarde du "running-config"] **********************************************************************************************************************************************************
+changed: [RT1-CORE -> localhost]
+changed: [SW1-CORE -> localhost]
+
+TASK [read-config : Lecture du "startup-config"] *************************************************************************************************************************************************************
+ok: [RT1-CORE]
+ok: [SW1-CORE]
+
+TASK [read-config : Sauvegarde du "running-config"] **********************************************************************************************************************************************************
+changed: [RT1-CORE -> localhost]
+changed: [SW1-CORE -> localhost]
+
+TASK [backup-config : Inventaire des sauvegardes locale "startup-config"] ************************************************************************************************************************************
+ok: [RT1-CORE -> localhost]
+ok: [SW1-CORE -> localhost]
+
+TASK [backup-config : Inventaire des sauvegardes locale "running-config"] ************************************************************************************************************************************
+ok: [RT1-CORE -> localhost]
+ok: [SW1-CORE -> localhost]
+
+TASK [backup-config : Sauvegarde de la configuration "startup-config" vers le serveur ftp "SRV-FTP"] *********************************************************************************************************
+changed: [RT1-CORE -> localhost] => (item={'path': '/etc/ansible/cisco/RT1-CORE.startup-config.2023-10-28.13:33:48', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 6125, 'inode': 1573597, 'dev': 2049, 'nlink': 1, 'atime': 1698492898.414099, 'mtime': 1698492898.2780967, 'ctime': 1698492898.414099, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False})
+changed: [SW1-CORE -> localhost] => (item={'path': '/etc/ansible/cisco/SW1-CORE.startup-config.2023-10-28.13:33:56', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 6125, 'inode': 1573597, 'dev': 2049, 'nlink': 1, 'atime': 1698492898.414099, 'mtime': 1698492898.2780967, 'ctime': 1698492898.414099, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False})
+
+TASK [backup-config : Sauvegarde de la configuration "running-config" vers le serveur ftp "SRV-FTP"] *********************************************************************************************************
+changed: [RT1-CORE -> localhost] => (item={'path': '/etc/ansible/cisco/RT1-CORE.running-config.2023-10-28.13:33:48', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 7761, 'inode': 1573595, 'dev': 2049, 'nlink': 1, 'atime': 1698492889.9419584, 'mtime': 1698492889.7019544, 'ctime': 1698492889.9419584, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False})
+changed: [SW1-CORE -> localhost] => (item={'path': '/etc/ansible/cisco/SW1-CORE.running-config.2023-10-28.13:33:56', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 7761, 'inode': 1573595, 'dev': 2049, 'nlink': 1, 'atime': 1698492889.9419584, 'mtime': 1698492889.7019544, 'ctime': 1698492889.9419584, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False})
+
+PLAY [cisco-config-snmp] *************************************************************************************************************************************************************************************
+
+TASK [configure-snmp : Configuration SNMP on cisco devices] **************************************************************************************************************************************************
+[WARNING]: ansible-pylibssh not installed, falling back to paramiko
+[WARNING]: To ensure idempotency and correct diff the input configuration lines should be similar to how they appear if present in the running configuration on device
+changed: [RT1-CORE]
+changed: [SW1-CORE]
+
+PLAY [cisco-config-vlan] *************************************************************************************************************************************************************************************
+
+TASK [configure-vlan : Déclaration des vlans] ****************************************************************************************************************************************************************
+[WARNING]: ansible-pylibssh not installed, falling back to paramiko
+ok: [SW1-CORE]
+
+TASK [configure-vlan : Configuration des vlans sur les interfaces] *******************************************************************************************************************************************
+ok: [SW1-CORE]
+
+TASK [configure-vlan : Sauvegarde du "running-config" vers le "startup-config"] ******************************************************************************************************************************
+changed: [SW1-CORE]
+
+PLAY RECAP ***************************************************************************************************************************************************************************************************
+RT1-CORE                   : ok=10   changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+SW1-CORE                   : ok=13   changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+

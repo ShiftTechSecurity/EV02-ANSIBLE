@@ -1,0 +1,33 @@
+---
+# tasks file for /etc/ansible/roles/backup-config
+- name: Inventaire des sauvegardes locale "startup-config" des cinq dernières minutes
+  ansible.builtin.find:
+    paths: /etc/ansible/cisco/
+    patterns: "{{ device_name }}.startup-config*"
+    age: -300s
+  register: startup_config_files
+  delegate_to: localhost
+
+- name: Inventaire des sauvegardes locale "running-config" de la dernière heure
+  ansible.builtin.find:
+    paths: /etc/ansible/cisco/
+    patterns: "{{ device_name }}.running-config*"
+    age: -300s
+  register: running_config_files
+  delegate_to: localhost
+
+- name: Sauvegarde de la configuration "startup-config" vers le serveur ftp "SRV-FTP"
+  ansible.builtin.shell:
+    cmd: "curl -T {{ item.path }} ftp://{{ ftp_ip_address }}/config/ --user {{ ftp_username }}:{{ ftp_password }}"
+  loop: "{{ startup_config_files.files }}"
+  when: startup_config_files.matched > 0
+  delegate_to: localhost
+  become: yes
+
+- name: Sauvegarde de la configuration "running-config" vers le serveur ftp "SRV-FTP"
+  ansible.builtin.shell:
+    cmd: "curl -T {{ item.path }} ftp://{{ ftp_ip_address }}/config/ --user {{ ftp_username }}:{{ ftp_password }}"
+  loop: "{{ running_config_files.files }}"
+  when: running_config_files.matched > 0
+  delegate_to: localhost
+  become: yes

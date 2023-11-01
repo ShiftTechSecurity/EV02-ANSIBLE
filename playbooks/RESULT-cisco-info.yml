@@ -1,0 +1,80 @@
+ansible@SRV-ANSIBLE:/etc/ansible/playbooks$ ansible-playbook cisco-info.yml
+
+PLAY [cisco-info] ********************************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] ***************************************************************************************************************************************************************************************
+[WARNING]: ansible-pylibssh not installed, falling back to paramiko
+[WARNING]: ansible-pylibssh not installed, falling back to paramiko
+ok: [RT1-CORE]
+ok: [SW1-CORE]
+
+TASK [read-config : Récupération des variables "ansible_date_time" de ansible] *******************************************************************************************************************************
+ok: [SW1-CORE]
+ok: [RT1-CORE]
+
+TASK [read-config : Lecture du "running-config"] *************************************************************************************************************************************************************
+ok: [RT1-CORE]
+ok: [SW1-CORE]
+
+TASK [read-config : Sauvegarde du "running-config"] **********************************************************************************************************************************************************
+changed: [SW1-CORE -> localhost]
+changed: [RT1-CORE -> localhost]
+
+TASK [read-config : Lecture du "startup-config"] *************************************************************************************************************************************************************
+ok: [RT1-CORE]
+ok: [SW1-CORE]
+
+TASK [read-config : Sauvegarde du "running-config"] **********************************************************************************************************************************************************
+changed: [RT1-CORE -> localhost]
+changed: [SW1-CORE -> localhost]
+
+TASK [read-system-info : Récupération des variables "ansible_date_time" de ansible] **************************************************************************************************************************
+ok: [RT1-CORE]
+ok: [SW1-CORE]
+
+TASK [read-system-info : Lecture de l'information système] ***************************************************************************************************************************************************
+ok: [RT1-CORE]
+ok: [SW1-CORE]
+
+TASK [read-system-info : Affichage des informations système] *************************************************************************************************************************************************
+ok: [RT1-CORE] => {
+    "msg": [
+        "Nom d'hôte: RT1-CORE",
+        "Modèle hôte: CISCO1921/K9",
+        "Numéro de série hôte: FCZ1810C1CT",
+        "Système hôte: ios",
+        "Version système hôte: 15.8(3)M2",
+        "Image hôte: usbflash0:c1900-universalk9-mz.SPA.158-3.M2.bin"
+    ]
+}
+ok: [SW1-CORE] => {
+    "msg": [
+        "Nom d'hôte: SW1-CORE",
+        "Modèle hôte: WS-C3750-24P",
+        "Numéro de série hôte: CAT0833R1KX",
+        "Système hôte: ios",
+        "Version système hôte: 12.2(55)SE9",
+        "Image hôte: flash:/c3750-ipbasek9-mz.122-55.SE9/c3750-ipbasek9-mz.122-55.SE9.bin"
+    ]
+}
+
+TASK [read-system-info : Sauvegarde locale de l'information système] *****************************************************************************************************************************************
+changed: [RT1-CORE -> localhost]
+changed: [SW1-CORE -> localhost]
+
+PLAY RECAP ***************************************************************************************************************************************************************************************************
+RT1-CORE                   : ok=10   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+SW1-CORE                   : ok=10   changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+
+
+ansible@SRV-ANSIBLE:/etc/ansible/playbooks$ ls -al ../cisco/
+total 48
+drwxr-xr-x 2 root root 12288 28 oct.  09:54 .
+drwxr-xr-x 8 root root  4096 27 oct.  15:04 ..
+-rw-r--r-- 1 root root  3502 28 oct.  09:54 RT1-CORE.running-config.2023-10-28.09:54:02
+-rw-r--r-- 1 root root  3435 28 oct.  09:54 RT1-CORE.startup-config.2023-10-28.09:54:02
+-rw-r--r-- 1 root root   308 28 oct.  09:54 RT1-CORE.system-info.2023-10-28.09:54:08
+-rw-r--r-- 1 root root  7502 28 oct.  09:54 SW1-CORE.running-config.2023-10-28.09:54:02
+-rw-r--r-- 1 root root  5866 28 oct.  09:54 SW1-CORE.startup-config.2023-10-28.09:54:02
+-rw-r--r-- 1 root root   331 28 oct.  09:54 SW1-CORE.system-info.2023-10-28.09:54:08

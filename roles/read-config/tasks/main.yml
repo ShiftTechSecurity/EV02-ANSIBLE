@@ -1,0 +1,30 @@
+---
+# tasks file for /etc/ansible/roles/read-config
+- name: Récupération des variables "ansible_date_time" de ansible
+  setup:
+    filter: "ansible_date_time"
+    gather_subset: "!all"
+
+- name: Lecture du "running-config"
+  cisco.ios.command:
+    commands : show running-config
+  register: cisco_running_config
+
+- name: Sauvegarde du "running-config"
+  ansible.builtin.copy:
+    content: "{{ cisco_running_config.stdout_lines | to_nice_json }}"
+    dest: "/etc/ansible/cisco/{{ device_name }}.running-config.{{ ansible_date_time.date }}.{{ ansible_date_time.time }}"
+  delegate_to: localhost
+  become: yes
+
+- name: Lecture du "startup-config"
+  cisco.ios.command:
+    commands : show startup-config
+  register: cisco_startup_config
+
+- name: Sauvegarde du "startup-config"
+  ansible.builtin.copy:
+    content: "{{ cisco_startup_config.stdout_lines | to_nice_json }}"
+    dest: "/etc/ansible/cisco/{{ device_name }}.startup-config.{{ ansible_date_time.date }}.{{ ansible_date_time.time }}"
+  delegate_to: localhost
+  become: yes

@@ -1,0 +1,24 @@
+---
+- name: cisco-update-router
+  remote_user: cisco
+  gather_facts: no
+  hosts:
+    - ciscorouter
+
+  roles:
+    - read-config
+    - backup-config
+    - backup-image
+    - import-image-router
+
+- name: cisco-update-switch
+  remote_user: cisco
+  gather_facts: no
+  hosts:
+    - ciscoswitch
+
+  roles:
+    - read-config
+    - backup-config
+    - backup-image
+    - import-image-switch

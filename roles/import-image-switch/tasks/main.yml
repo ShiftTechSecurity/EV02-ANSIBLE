@@ -1,0 +1,11 @@
+---
+# tasks file for /etc/ansible/roles/import-image-switch
+- name: Importation de l'image depuis le serveur "SRV-FTP"
+  cisco.ios.ios_command:
+    commands:
+      - "copy ftp://192.168.30.3/image/new.switch-image.version.bin flash:new.switch-image.version.bin"
+
+- name: Activation de la nouvelle image
+  cisco.ios.ios_config:
+    commands:
+      - "boot system flash:new.switch-image.version.bin"

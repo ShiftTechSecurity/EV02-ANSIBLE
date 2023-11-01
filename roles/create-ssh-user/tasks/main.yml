@@ -1,0 +1,11 @@
+---
+# tasks file for /etc/ansible/roles/create-ssh-user
+- name: Create the user "ansible" on the cisco switches
+  cisco.ios.ios_user:
+    name: ansible
+    configured_password: ansible
+    state: present
+
+- name: Sauvegarde du "running-config" vers le "startup-config"
+  cisco.ios.ios_config:
+    save_when: modified

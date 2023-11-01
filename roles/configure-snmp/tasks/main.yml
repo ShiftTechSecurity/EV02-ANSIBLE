@@ -1,0 +1,8 @@
+---
+# tasks file for /etc/ansible/roles/configure-snmp
+- name: Configuration SNMP on cisco devices
+  cisco.ios.ios_config:
+    commands:
+      - snmp-server group ansible-group v3 auth
+      - snmp-server user {{ snmp_user }} ansible-group v3 auth sha {{ snmp_password }} priv aes 256 {{ snmp_priv_password }}
+    save_when: modified

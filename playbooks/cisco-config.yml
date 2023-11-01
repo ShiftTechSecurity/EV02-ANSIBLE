@@ -1,0 +1,30 @@
+---
+- name: backup-pre-config
+  remote_user: cisco
+  gather_facts: no
+  hosts:
+    - ciscorouter
+    - ciscoswitch
+
+  roles:
+    - read-config
+    - backup-config
+
+- name: cisco-config-snmp
+  remote_user: cisco
+  gather_facts: no
+  hosts:
+    - ciscorouter
+    - ciscoswitch
+
+  roles:
+    - configure-snmp
+
+- name: cisco-config-vlan
+  remote_user: cisco
+  gather_facts: no
+  hosts:
+    - ciscoswitch
+
+  roles:
+    - configure-vlan

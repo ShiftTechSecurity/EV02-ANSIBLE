@@ -1,0 +1,23 @@
+---
+- name: cisco-auth-router
+  remote_user: cisco
+  gather_facts: no
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  hosts : ciscorouter
+
+  roles:
+    - create-ssh-key
+    - deploy-ssh-key
+
+- name: cisco-auth-switch
+  remote_user: cisco
+  gather_facts: no
+  become: yes
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  hosts : ciscoswitch
+
+  roles:
+    - create-ssh-user

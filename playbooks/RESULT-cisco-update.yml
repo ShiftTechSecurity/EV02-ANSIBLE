@@ -1,0 +1,95 @@
+ansible@SRV-ANSIBLE:/etc/ansible/playbooks$ ansible-playbook cisco-update.yml
+
+PLAY [cisco-update-switch] ***********************************************************************************************************************************************************************************
+
+TASK [read-config : Récupération des variables "ansible_date_time" de ansible] *******************************************************************************************************************************
+ok: [RT1-CORE]
+
+TASK [read-config : Lecture du "running-config"] *************************************************************************************************************************************************************
+ok: [RT1-CORE]
+
+TASK [read-config : Sauvegarde du "running-config"] **********************************************************************************************************************************************************
+changed: [RT1-CORE -> localhost]
+
+TASK [read-config : Lecture du "startup-config"] *************************************************************************************************************************************************************
+ok: [RT1-CORE]
+
+TASK [read-config : Sauvegarde du "running-config"] **********************************************************************************************************************************************************
+changed: [RT1-CORE -> localhost]
+
+TASK [backup-config : Inventaire des sauvegardes locale "startup-config"] ************************************************************************************************************************************
+ok: [RT1-CORE -> localhost]
+
+TASK [backup-config : Inventaire des sauvegardes locale "running-config"] ************************************************************************************************************************************
+ok: [RT1-CORE -> localhost]
+
+TASK [backup-config : Sauvegarde de la configuration "startup-config" vers le serveur ftp "SRV-FTP"] *********************************************************************************************************
+changed: [RT1-CORE -> localhost] => (item={'path': '/etc/ansible/cisco/RT1-CORE.startup-config.2023-10-28.10:24:32', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 5866, 'inode': 1573583, 'dev': 2049, 'nlink': 1, 'atime': 1698481799.4755416, 'mtime': 1698481799.3435395, 'ctime': 1698481799.4755416, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False})
+
+TASK [backup-config : Sauvegarde de la configuration "running-config" vers le serveur ftp "SRV-FTP"] *********************************************************************************************************
+changed: [RT1-CORE -> localhost] => (item={'path': '/etc/ansible/cisco/RT1-CORE.running-config.2023-10-28.10:24:32', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 7502, 'inode': 1573577, 'dev': 2049, 'nlink': 1, 'atime': 1698481798.4875262, 'mtime': 1698481798.2475226, 'ctime': 1698481798.4875262, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False})
+
+TASK [backup-image : Récupération des variables "ansible_date_time" de ansible] ******************************************************************************************************************************
+ok: [RT1-CORE]
+
+TASK [backup-image : Récupération des facts IOS] *************************************************************************************************************************************************************
+ok: [RT1-CORE]
+
+TASK [backup-image : Configuration de l'accès au serveur "SRV-FTP"] ******************************************************************************************************************************************
+ok: [RT1-CORE]
+
+TASK [backup-image : Sauvegarde de l'image vers le serveur "SRV-FTP"] ****************************************************************************************************************************************
+ok: [RT1-CORE]
+
+TASK [import-image-switch : Importation de l'image depuis le serveur "SRV-FTP"] ******************************************************************************************************************************
+ok: [RT1-CORE]
+
+TASK [import-image-switch : Activation de la nouvelle image] *************************************************************************************************************************************************
+ok: [RT1-CORE]
+
+PLAY [cisco-update-switch] ***********************************************************************************************************************************************************************************
+
+TASK [Gathering Facts] ***************************************************************************************************************************************************************************************
+
+TASK [read-config : Récupération des variables "ansible_date_time" de ansible] *******************************************************************************************************************************
+ok: [SW1-CORE]
+
+TASK [read-config : Lecture du "running-config"] *************************************************************************************************************************************************************
+ok: [SW1-CORE]
+
+TASK [read-config : Sauvegarde du "running-config"] **********************************************************************************************************************************************************
+changed: [SW1-CORE -> localhost]
+
+TASK [read-config : Lecture du "startup-config"] *************************************************************************************************************************************************************
+ok: [SW1-CORE]
+
+TASK [read-config : Sauvegarde du "running-config"] **********************************************************************************************************************************************************
+changed: [SW1-CORE -> localhost]
+
+TASK [backup-config : Inventaire des sauvegardes locale "startup-config"] ************************************************************************************************************************************
+ok: [SW1-CORE -> localhost]
+
+TASK [backup-config : Inventaire des sauvegardes locale "running-config"] ************************************************************************************************************************************
+ok: [SW1-CORE -> localhost]
+
+TASK [backup-config : Sauvegarde de la configuration "startup-config" vers le serveur ftp "SRV-FTP"] *********************************************************************************************************
+changed: [SW1-CORE -> localhost] => (item={'path': '/etc/ansible/cisco/SW1-CORE.startup-config.2023-10-28.10:29:56', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 5866, 'inode': 1573583, 'dev': 2049, 'nlink': 1, 'atime': 1698481799.4755416, 'mtime': 1698481799.3435395, 'ctime': 1698481799.4755416, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False})
+
+TASK [backup-config : Sauvegarde de la configuration "running-config" vers le serveur ftp "SRV-FTP"] *********************************************************************************************************
+changed: [SW1-CORE -> localhost] => (item={'path': '/etc/ansible/cisco/SW1-CORE.running-config.2023-10-28.10:29:56', 'mode': '0644', 'isdir': False, 'ischr': False, 'isblk': False, 'isreg': True, 'isfifo': False, 'islnk': False, 'issock': False, 'uid': 0, 'gid': 0, 'size': 7502, 'inode': 1573577, 'dev': 2049, 'nlink': 1, 'atime': 1698481798.4875262, 'mtime': 1698481798.2475226, 'ctime': 1698481798.4875262, 'gr_name': 'root', 'pw_name': 'root', 'wusr': True, 'rusr': True, 'xusr': False, 'wgrp': False, 'rgrp': True, 'xgrp': False, 'woth': False, 'roth': True, 'xoth': False, 'isuid': False, 'isgid': False})
+
+TASK [backup-image : Récupération des variables "ansible_date_time" de ansible] ******************************************************************************************************************************
+ok: [SW1-CORE]
+
+TASK [backup-image : Récupération des facts IOS] *************************************************************************************************************************************************************
+ok: [SW1-CORE]
+
+TASK [backup-image : Configuration de l'accès au serveur "SRV-FTP"] ******************************************************************************************************************************************
+ok: [SW1-CORE]
+
+TASK [backup-image : Sauvegarde de l'image vers le serveur "SRV-FTP"] ****************************************************************************************************************************************
+ok: [SW1-CORE]
+
+PLAY RECAP ***************************************************************************************************************************************************************************************************
+RT1-CORE                   : ok=15   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+SW1-CORE                   : ok=13   changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0

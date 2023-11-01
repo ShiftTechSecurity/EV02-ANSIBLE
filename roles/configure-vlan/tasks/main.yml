@@ -1,0 +1,28 @@
+---
+# tasks file for /etc/ansible/roles/configure-vlan
+- name: Déclaration des vlans
+  cisco.ios.ios_vlans:
+    config:
+      - name: VLAN100
+        vlan_id: 100
+        state: active
+      - name: VLAN110
+        vlan_id: 110
+        state: active
+      - name: VLAN120
+        vlan_id: 120
+        state: active
+
+- name: Configuration des vlans sur les interfaces
+  cisco.ios.ios_command:
+    commands:
+      - "conf t"
+      - "interface FastEthernet1/0/1"
+      - "switchport trunk encapsulation dot1q"
+      - "switchport mode trunk"
+      - "switchport trunk allowed vlan 100,110,120"
+      - "no shutdown"
+
+- name: Sauvegarde du "running-config" vers le "startup-config"
+  cisco.ios.ios_config:
+    save_when: modified

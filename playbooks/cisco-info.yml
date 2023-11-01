@@ -1,0 +1,10 @@
+---
+- name: cisco-info
+  remote_user: cisco
+  hosts:
+    - ciscorouter
+    - ciscoswitch
+
+  roles:
+    - read-config
+    - read-system-info

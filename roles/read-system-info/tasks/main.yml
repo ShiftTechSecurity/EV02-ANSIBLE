@@ -1,0 +1,27 @@
+---
+# tasks file for /etc/ansible/roles/read-system-info
+- name: Récupération des variables "ansible_date_time" de ansible
+  setup:
+    filter: "ansible_date_time"
+    gather_subset: "!all"
+
+- name: Lecture de l'information système
+  cisco.ios.ios_facts:
+    gather_subset: min
+- name: Affichage des informations système
+  debug:
+    msg:
+      - "Nom d'hôte: {{ ansible_net_hostname }}"
+      - "Modèle hôte: {{ ansible_net_model }}"
+      - "Numéro de série hôte: {{ ansible_net_serialnum }}"
+      - "Système hôte: {{ ansible_net_system }}"
+      - "Version système hôte: {{ ansible_net_version }}"
+      - "Image hôte: {{ ansible_net_image }}"
+  register: cisco_system_info
+
+- name: Sauvegarde locale de l'information système
+  ansible.builtin.copy:
+    content: "{{ cisco_system_info | to_nice_json }}"
+    dest: "/etc/ansible/cisco/{{ device_name }}.system-info.{{ ansible_date_time.date }}.{{ ansible_date_time.time }}"
+  delegate_to: localhost
+  become: yes

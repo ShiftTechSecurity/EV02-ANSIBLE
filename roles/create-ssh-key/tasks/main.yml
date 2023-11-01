@@ -1,0 +1,18 @@
+---
+# tasks file for /etc/ansible/roles/create-ssh-key
+- name: Création d'une paire de clé SSH pour l'authentication des switch et router cisco
+  ansible.builtin.openssh_keypair:
+    path: /home/ansible/.ssh/cisco
+    type: rsa
+    size: 2048
+    state: present
+    force: no
+  run_once: yes
+  delegate_to: localhost
+
+- name: Changement de propriétaire de la paire de clés SSH sur le serveur ansible
+  ansible.builtin.command:
+    cmd: chown -R ansible:ansible /home/ansible/.ssh/cisco /home/ansible/.ssh/cisco.pub
+  become: yes
+  run_once: yes
+  delegate_to: localhost

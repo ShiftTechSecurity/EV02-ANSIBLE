@@ -1,0 +1,29 @@
+ansible@SRV-ANSIBLE:/etc/ansible/playbooks$ ansible-playbook cisco-auth.yml
+
+PLAY [cisco-auth-router] *************************************************************************************************************************************************************************************
+
+TASK [create-ssh-key : Création d'une paire de clé SSH pour l'authentication des switch et router cisco] *****************************************************************************************************
+ok: [RT1-CORE -> localhost]
+
+TASK [create-ssh-key : Changement de propriétaire de la paire de clés SSH sur le serveur ansible] ************************************************************************************************************
+changed: [RT1-CORE -> localhost]
+
+TASK [deploy-ssh-key : Create the user "ansible" on the cisco routers and deploy SSH key] ********************************************************************************************************************
+[WARNING]: Module did not set no_log for update_password
+[WARNING]: Module did not set no_log for password_type
+changed: [RT1-CORE]
+
+TASK [deploy-ssh-key : Sauvegarde du "running-config" vers le "startup-config"] ******************************************************************************************************************************
+changed: [RT1-CORE]
+
+PLAY [cisco-auth-switch] *************************************************************************************************************************************************************************************
+
+TASK [create-ssh-user : Create the user "ansible" on the cisco switches] *************************************************************************************************************************************
+changed: [SW1-CORE]
+
+TASK [create-ssh-user : Sauvegarde du "running-config" vers le "startup-config"] *****************************************************************************************************************************
+changed: [SW1-CORE]
+
+PLAY RECAP ***************************************************************************************************************************************************************************************************
+RT1-CORE                   : ok=4    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+SW1-CORE                   : ok=2    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0

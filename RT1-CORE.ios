@@ -1,0 +1,56 @@
+!! Passage en mode configuration
+enable
+configure terminal
+
+!! Configuration de l'identifiant de connexion
+username cisco password cisco
+enable secret cisco
+
+!! Configuration du SSH
+hostname RT1-CORE
+ip domain-name cisco.com
+crypto key generate rsa
+2048
+ip ssh version 2
+line vty 0 4
+transport input ssh
+login local
+
+!! Configuration des interfaces
+interface g 0/0
+ip address 192.168.1.85 255.255.255.0
+ip nat outside
+no shutdown
+interface g 0/1
+ip address 192.168.254.254 255.255.255.0
+ip nat inside
+no shutdown
+
+!! Configuration des routes
+ip route 192.168.10.0 255.255.255.0 192.168.254.1
+ip route 192.168.20.0 255.255.255.0 192.168.254.1
+ip route 192.168.30.0 255.255.255.0 192.168.254.1
+ip route 192.168.51.0 255.255.255.0 192.168.254.1
+ip route 0.0.0.0 0.0.0.0 192.168.1.254
+
+!! Configuration du NAT surchargé
+access-list 1 permit 192.168.10.0 0.0.0.255
+access-list 1 permit 192.168.20.0 0.0.0.255
+access-list 1 permit 192.168.30.0 0.0.0.255
+access-list 1 permit 192.168.51.0 0.0.0.255
+ip nat inside source list 1 interface g 0/0 overload
+
+!! Autorisation de tout le traffic réseau
+access-list 100 remark Autorisation any any
+access-list 10 permit ip any any
+access-list 101 remark Autorisation any any
+access-list 101 permit ip any any
+
+!! Application des règles de filtrage (ACL) sur les interfaces
+interface g 0/0
+ip access-group 100 in
+interface g 0/1
+ip access-group 101 in
+
+!! Sauvegarde de la configuration
+do copy running-config startup-config
